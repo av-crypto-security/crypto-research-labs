@@ -1,39 +1,54 @@
-Post-Quantum Authentication Prototype
+# PQC Authentication Prototype (KEM+MAC & Signature-Based)
 
-This repository contains a reference implementation of a post-quantum
-authentication protocol based on Kyber-512 (KEM + MAC) and
-Dilithium-II (signature-based authentication).
+Minimal, self-contained prototype demonstrating **post-quantum authentication primitives**
+based on **KEM + MAC** and **digital signatures**, implemented with `oqs-python`
+(liboqs bindings).
 
-The prototype is intended for research and performance evaluation.
+The goal of this repository is to provide a **clear, reproducible reference**
+for:
+- PQC-based authenticated key establishment
+- Signature-based authentication
+- Practical performance benchmarking (latency, sizes)
+- Robust interaction with different `oqs-python` API variants
 
-Protocol overview
+This is **not a full protocol implementation**, but a focused cryptographic prototype.
 
+---
 
+## Features
 
+### Implemented primitives
+- **KEM**: Kyber (default: `Kyber512`)
+- **Signature**: Dilithium (default: `Dilithium2`)
+- **MAC**: HMAC-SHA256
+- **Key derivation**: HKDF (RFC 5869–style)
 
+### Authentication models
+- **KEM + MAC**
+  - Nonce-based context binding
+  - Shared secret derivation via HKDF
+  - Explicit MAC verification
+- **Signature-based authentication**
+  - Nonce-based challenge-response
+  - Explicit sign / verify separation
 
-Performance evaluation
+### Benchmarking
+- Median timing measurements
+- Encapsulation / decapsulation
+- Signing / verification
+- MAC generation / verification
+- Ciphertext and signature sizes
+- JSON export of results
+- Optional matplotlib visualization
 
-Benchmarks were executed on an x86-64 system (Intel i7-10750H,
-Ubuntu 24.04 VM, Python 3.12, liboqs with AVX2 support).
+---
 
-Measured values include full protocol execution, including
-object initialization, HKDF, MAC, and serialization.
+## Repository structure
 
-Results (indicative)
-
-Kyber-512 encapsulation: ~29 µs
-
-Kyber-512 decapsulation: ~26 µs
-
-Dilithium-II signing: ~68 µs
-
-Dilithium-II verification: ~33 µs
-
-The observed overhead is explained by object lifecycle management
-and reflects realistic application-level usage.
-
-Notes
-
-Lower-level measurements (pure C calls) yield lower latency and are
-consistent with published NIST reference values.
+```text
+.
+├── pqc_prototype.py     # Single-file prototype (protocol + benchmarks)
+├── pqc_summary.json     # Auto-generated benchmark results
+├── pqc_plot.png         # Auto-generated E2E timing plot (optional)
+├── protocol_diagram.png # High-level protocol flow (optional)
+└── README.md
