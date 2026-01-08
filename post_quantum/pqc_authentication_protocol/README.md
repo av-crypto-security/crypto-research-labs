@@ -1,54 +1,52 @@
-# PQC Authentication Prototype (KEM+MAC & Signature-Based)
+# Post-Quantum Authentication Prototype
 
-Minimal, self-contained prototype demonstrating **post-quantum authentication primitives**
-based on **KEM + MAC** and **digital signatures**, implemented with `oqs-python`
-(liboqs bindings).
+Minimal, self-contained **post-quantum authentication prototype**
+based on **KEM + MAC** and **digital signatures**, implemented with
+`oqs-python` (liboqs).
 
-The goal of this repository is to provide a **clear, reproducible reference**
-for:
-- PQC-based authenticated key establishment
-- Signature-based authentication
-- Practical performance benchmarking (latency, sizes)
-- Robust interaction with different `oqs-python` API variants
-
-This is **not a full protocol implementation**, but a focused cryptographic prototype.
+This is a **compact research prototype**, focused on correctness,
+reproducibility, and performance measurements — not a full protocol.
 
 ---
 
-## Features
+## What is implemented
 
-### Implemented primitives
-- **KEM**: Kyber (default: `Kyber512`)
-- **Signature**: Dilithium (default: `Dilithium2`)
-- **MAC**: HMAC-SHA256
-- **Key derivation**: HKDF (RFC 5869–style)
+**Primitives**
+- KEM: Kyber (default: Kyber512)
+- Signature: Dilithium (default: Dilithium2)
+- MAC: HMAC-SHA256
+- KDF: HKDF (RFC 5869–style)
 
-### Authentication models
+**Authentication models**
 - **KEM + MAC**
   - Nonce-based context binding
   - Shared secret derivation via HKDF
   - Explicit MAC verification
 - **Signature-based authentication**
-  - Nonce-based challenge-response
-  - Explicit sign / verify separation
+  - Nonce-based challenge–response
+  - Explicit sign / verify
 
-### Benchmarking
-- Median timing measurements
-- Encapsulation / decapsulation
-- Signing / verification
-- MAC generation / verification
+**Benchmarking**
+- Median timings (encap / decap / sign / verify / MAC)
 - Ciphertext and signature sizes
 - JSON export of results
-- Optional matplotlib visualization
+- Optional E2E timing plot
 
 ---
 
-## Repository structure
+Everything is intentionally kept in one place.
 
-```text
-.
-├── pqc_prototype.py     # Single-file prototype (protocol + benchmarks)
-├── pqc_summary.json     # Auto-generated benchmark results
-├── pqc_plot.png         # Auto-generated E2E timing plot (optional)
-├── protocol_diagram.png # High-level protocol flow (optional)
-└── README.md
+---
+
+**Design notes**
+Supports multiple oqs-python API variants
+(encap_secret, encapsulate, key import/export differences).
+Explicit nonces prevent replay and bind sessions.
+HKDF context separation is used.
+Benchmarks are embedded to avoid wrapper overhead.
+This is a measurement-oriented prototype, not production code.
+
+**Background**
+This prototype is derived from graduate-level research on
+post-quantum authentication and protocol design and was extracted
+into a standalone, reproducible form.
