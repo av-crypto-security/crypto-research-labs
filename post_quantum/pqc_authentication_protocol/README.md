@@ -31,6 +31,8 @@ reproducibility, and performance measurements — not a full protocol.
 - Ciphertext and signature sizes
 - JSON export of results
 - Optional E2E timing plot
+- Benchmark results are shown as example measurements
+- Exact timings may vary depending on hardware, system load and liboqs version
 
 ---
 
